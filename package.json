@@ -1,0 +1,27 @@
+{
+  "name": "polymer-2-redux",
+  "version": "1.0.0",
+  "description": "demo of redux integration into polymer 2",
+  "main": "index.html",
+  "scripts": {
+    "start": "polymer serve"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/razvan-rosu/polymer-2-redux.git"
+  },
+  "keywords": [
+    "redux",
+    "polymer2",
+    "webcomponents"
+  ],
+  "author": "Răzvan Roșu",
+  "license": "MIT",
+  "dependencies": {
+    "redux": "^4.0.1"
+  },
+  "bugs": {
+    "url": "https://github.com/razvan-rosu/polymer-2-redux/issues"
+  },
+  "homepage": "https://github.com/razvan-rosu/polymer-2-redux#readme"
+}

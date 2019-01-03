@@ -1,0 +1,36 @@
+{
+  "name": "polymer-2-redux",
+  "homepage": "https://github.com/razvan-rosu/polymer-2-redux",
+  "authors": [
+    "Răzvan Roșu"
+  ],
+  "description": "demo of redux integration into polymer 2",
+  "main": "index.html",
+  "keywords": [
+    "redux",
+    "polymer2",
+    "webcomponents"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "polymer-redux": "^1.0.5",
+    "polymer": "Polymer/polymer#^2",
+    "webcomponentsjs": "webcomponents/webcomponentsjs#^2.2.1",
+    "paper-button": "^2",
+    "paper-dialog": "^2.0.0",
+    "paper-dialog-scrollable": "^2.0.0",
+    "neon-animation": "^2.0.0",
+    "paper-checkbox": "^2.0.0"
+  },
+  "resolutions": {
+    "polymer": "^2",
+    "webcomponentsjs": "^v1.1.0"
+  }
+}
