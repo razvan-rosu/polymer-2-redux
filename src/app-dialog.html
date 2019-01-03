@@ -1,0 +1,105 @@
+<!-- GOOGLE COMPONENTS -->
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../bower_components/polymer/lib/elements/dom-repeat.html">
+<link rel="import" href="../bower_components/paper-button/paper-button.html">
+<!-- PROJECT COMPONENTS -->
+<link rel="import" href="../bower_components/paper-dialog/paper-dialog.html">
+<link rel="import" href="../bower_components/paper-dialog-scrollable/paper-dialog-scrollable.html">
+<!-- REDUX STORE -->
+<link rel="import" href="redux-mixin.html">
+
+<dom-module id="app-dialog">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+
+      @media (max-width: 600px) {
+        paper-dialog {
+          margin: 0;
+        }
+      }
+
+      @media (min-width: 601px) {
+        paper-dialog {
+          width: 100%;
+          max-width: 500px;
+        }
+      }
+    </style>
+
+    <paper-dialog id="dialog">
+      <h2>[[title]]</h2>
+      <paper-dialog-scrollable>
+        <p>[[description]]</p>
+        <p>Status (is active?): [[isActive]]</p>
+        <ul>
+        <template is="dom-repeat" items="[[bullets]]">
+          <li>[[item]]</li>
+        </template>
+        </ul>
+      </paper-dialog-scrollable>
+      <footer>
+        <paper-button raised class="green" dialog-confirm>OK</paper-button>
+      </footer>
+    </paper-dialog>
+  </template>
+
+  <script>
+    class AppDialog extends ReduxMixin(Polymer.Element) {
+      static get is() {
+        return 'app-dialog'
+      }
+
+      static get properties() {
+        return {
+          // Component properties
+          itemTitle: String,
+          itemDescription: String,
+          itemIsActive: Boolean,
+          itemBullets: Array,
+
+          // REDUX properties1
+          title: {
+            type: String,
+            statePath(state) {
+              //dynamic binding
+              return state.title
+            }
+          },
+          description: {
+            type: String,
+            statePath: 'description' //static binding
+          },
+          isActive: {
+            type: Boolean,
+            statePath: 'isActive' //static binding
+          },
+          bullets: {
+            type: Array,
+            statePath: 'bullets' //static binding
+          }
+        }
+      }
+
+      ready() {
+        super.ready();
+        console.log('app-dialog is ready...');
+
+        const that = this;
+        document.addEventListener('open-dialog', function(e) {
+          console.log("caught event: open-dialog");
+
+          that.openDialog();
+        }, false);
+      }
+
+      openDialog() {
+        this.$.dialog.toggle();
+      }
+    }
+
+    customElements.define('app-dialog', AppDialog);
+  </script>
+</dom-module>

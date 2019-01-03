@@ -1,0 +1,108 @@
+<!-- GOOGLE COMPONENTS -->
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../bower_components/polymer/lib/elements/dom-repeat.html">
+<link rel="import" href="../bower_components/paper-button/paper-button.html">
+<!-- REDUX STORE -->
+<link rel="import" href="redux-mixin.html">
+
+<dom-module id="app-item">
+  <template>
+    <style>
+      :host {
+        -webkit-box-sizing: border-box;
+                box-sizing: border-box;
+        display: block;
+        padding: 15px;
+        border: 5px solid #ddd;
+      }
+
+      .green {
+        color: white;
+        background: green;
+      }
+    </style>
+
+    <div class="AppItem">
+      <div class="conainter-data">
+        <h3>[[itemTitle]]</h3>
+        <p>[[itemDescription]]</p>
+        <p>status (is active?): [[itemIsActive]]</p>
+        <ul>
+        <template is="dom-repeat" items="[[itemBullets]]">
+          <li>[[item]]</li>
+        </template>
+        </ul>
+      </div>
+      <paper-button class="green" raised on-tap="triggerDialog">Button</paper-button>
+    </div>
+  </template>
+
+  <script>
+    class AppItem extends ReduxMixin(Polymer.Element) {
+      static get is() {
+        return 'app-item'
+      }
+
+      static get properties() {
+        return {
+          // Component properties
+          itemTitle: String,
+          itemDescription: String,
+          itemIsActive: Boolean,
+          itemBullets: Array,
+
+          // REDUX properties
+          title: {
+            type: String,
+            statePath(state) {
+              //dynamic binding
+              return state.title
+            }
+          },
+          description: {
+            type: String,
+            statePath: 'description' //static binding
+          },
+          isActive: {
+            type: Boolean,
+            statePath: 'isActive' //static binding
+          },
+          bullets: {
+            type: Array,
+            statePath: 'bullets' //static binding
+          }
+        }
+      }
+
+      ready() {
+        super.ready();
+        console.log('app-item is ready...');
+      }
+
+      triggerDialog(elem) {
+        // update dialog data
+        this.updateReduxStore();
+
+        // open dialog
+        const dialogEvent = new Event('open-dialog');
+        document.dispatchEvent(dialogEvent);
+
+        console.log('trigger event', dialogEvent);
+      }
+
+      updateReduxStore() {
+        this.dispatch({
+          type: 'UPDATE_DIALOG',
+          title: this.itemTitle,
+          description: this.itemDescription,
+          isActive: this.itemIsActive,
+          bullets: this.itemBullets
+        });
+
+        console.log('dialog has been updated');
+      }
+    }
+
+    customElements.define('app-item', AppItem);
+  </script>
+</dom-module>

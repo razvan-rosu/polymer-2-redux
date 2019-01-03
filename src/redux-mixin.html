@@ -1,0 +1,33 @@
+<link rel="import" href="../bower_components/polymer-redux/polymer-redux.html">
+<script src="../node_modules/redux/dist/redux.js"></script>
+
+<script>
+  // Setup a Redux store
+  const initial = {
+    title: 'Redux stored title',
+    description: 'Redux stored description',
+    isActive: 'true',
+    bullets: ['redux bullet 1','redux bullet 2','redux bullet 3']
+  };
+
+  const reducer = (state, action) => {
+    switch (action.type) {
+      case 'UPDATE_DIALOG':
+      // ALWAYS return new state
+      return Object.assign({}, state, {
+        title: action.title, // New title
+        description: action.description,
+        isActive: action.isActive,
+        bullets: action.bullets
+      });
+
+      // Return the state, nothing changed.
+      default:
+      return state;
+    }
+  };
+  const store = Redux.createStore(reducer, initial);
+
+  // Export the ReduxMixin
+  ReduxMixin = PolymerRedux(store);
+</script>

@@ -1,0 +1,89 @@
+<!-- GOOGLE COMPONENTS -->
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../bower_components/polymer/lib/elements/dom-repeat.html">
+<link rel="import" href="../bower_components/paper-button/paper-button.html">
+<!-- PROJECT COMPONENTS -->
+<link rel="import" href="/src/app-item.html">
+<link rel="import" href="/src/app-dialog.html">
+
+<dom-module id="app-demo">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+
+      .container {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-orient: horizontal;
+        -webkit-box-direction: normal;
+            -ms-flex-direction: row;
+                flex-direction: row;
+        -ms-flex-wrap: wrap;
+            flex-wrap: wrap;
+        padding: 30px;
+        border: 5px solid #000;
+      }
+
+      app-item {
+        -webkit-box-flex: 1;
+            -ms-flex-positive: 1;
+                flex-grow: 1;
+        -ms-flex-preferred-size: 50%;
+            flex-basis: 50%;
+      }
+    </style>
+
+    <div class="container">
+      <template is="dom-repeat" items="[[data]]">
+        <app-item
+          item-title="[[item.title]]"
+          item-description="[[item.description]]"
+          item-is-active="[[item.isActive]]"
+          item-bullets="[[item.bullets]]"
+        ></app-item>
+      </template>
+    </div>
+
+    <app-dialog></app-dialog>
+  </template>
+
+  <script>
+      class AppDemo extends Polymer.mixinBehaviors([], Polymer.Element) {
+        static get is() {
+          return 'app-demo'
+        }
+
+        static get properties() {
+          return {
+            data: {
+              type: Array,
+              value: [
+                {
+                  "title":"This is title ONE for first app item",
+                  "description":"This is description ONE for first app item",
+                  "isActive":"true",
+                  "bullets":['item ONE bullet 1','item ONE bullet 2','item ONE bullet 3']
+                },
+                {
+                  "title":"title TWO",
+                  "description":"description TWO",
+                  "isActive":"false",
+                  "bullets":['item TWO bullet 1','item TWO bullet 2','item TWO bullet 3']
+                }
+              ]
+            }
+          }
+        }
+
+        ready() {
+          super.ready();
+          console.log('app-demo is ready...');
+        }
+      }
+
+      customElements.define('app-demo', AppDemo);
+  </script>
+</dom-module>
